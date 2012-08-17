@@ -1,0 +1,378 @@
+var zindex = 3;
+var id = 1;
+
+$.fn.previous = function() {
+ return $('#'+$(this).attr("previous"));
+}
+
+$.fn.getId = function() {
+ return $(this).attr("id");
+}
+
+$.fn.setNext = function(next) {
+ $(this).attr("next",next.attr("id"));
+}
+
+$.fn.setPrevious = function(previous) {
+ $(this).attr("previous",previous.attr("id"));
+}
+
+$.fn.hasPrevious = function() {
+ return $(this).hasAttr("previous");
+}
+
+$.fn.hasNext = function() {
+ return $(this).hasAttr("next");
+}
+
+$.fn.next = function() {
+ return $('#'+$(this).attr("next"));
+}
+
+$.fn.link = function($with) {
+ $(this).attr("next",$with.attr("id"));
+ $with.attr("previous",$(this).attr("id"));
+}
+
+$.fn.hasAttr = function(attr) {
+ if($(this).attr(attr) != undefined)
+  return true;
+ return false;
+}
+
+$(document).ready(function(){
+	$("#area").fadeIn('slow').click(function(event){
+		if(event.target != this)
+			return true;
+		var x = event.pageX;
+		var y = event.pageY;
+		var pos = $(this).offset();
+		x -= pos.left;
+		y -= pos.top;
+		createAPI(x,y);
+	});
+
+	$("#output").click(function(){
+		addBox("@{StaticR boxes_output_js}",200,200);
+		return true;
+	});
+	$("#save").click(function(){
+		return true;
+	});
+	$("#clear").click(function(){
+		clearWorkSpace();
+		return true;
+	});
+
+	//Add Bin
+
+	$("#bin").droppable({
+	  "drop":function(event,ui) {
+	    ui.draggable.remove();
+	  }
+	});
+});
+
+function createAPI(x,y) {
+  var api = $('<div class="api" id=' + id++ + '>');
+  var modal = 
+    $('<div class="modal fade hide">\
+  ');
+  var modal_header = 
+  $('<div class="modal-header">\
+      <button type="button" class="close" data-dismiss="modal">×</button>\
+      <h3>YQL-Table Chooser</h3>\
+    </div>\
+  ');
+  
+  var input = $('<input />');
+  var label = $('<label>Table name</label>');
+  var modal_body = 
+    $('<div class="modal-body">').append(label).append(input);
+  
+  var save = $('<a href="#" class="btn btn-primary">Use</a>');
+  save.click(function(event) {
+    modal.modal("hide");
+    api.off("click.setup");
+    api.on("click.start",function(event) {
+      api.start();
+    });
+  });
+  
+  var modal_footer = 
+    $('<div class="modal-footer">\
+        <a href="#" class="btn" data-dismiss="modal">Close</a>\
+      </div>').append(save);
+  
+  modal.append(modal_header);
+  modal.append(modal_body);
+  modal.append(modal_footer);
+  
+  $.ajax({
+    "url":"@{OpentablesR}",
+    "dataType":"json",
+    "async":false,
+    success:function(datatables){
+      datatables = jQuery.parseJSON(datatables);
+      input.typeahead({
+        "source":datatables
+      });
+      input.change(function() {
+        var opentable = $(this).val();
+        api.attr("api",opentable);
+        label.remove();
+        input.remove();
+        var cps = function(schema) {
+          schema = $(schema);
+          
+          var author = $('<div class="row">\
+                            <div class="span1">\
+                              Autor\
+                            </div>\
+                            <div class="span4">' +
+                              schema.find("author").text() +
+                            '</div>\
+                          </div>');
+          var description = $('<div class="row">\
+                            <div class="span1">\
+                              Description\
+                            </div>\
+                            <div class="span4">' +
+                              schema.find("description").text() +
+                            '</div>\
+                          </div>');
+          
+          modal_body.append(author).append(description);
+          var table =
+            $('<table class="table"/>');
+          var table_head = 
+            $('<thead>\
+                <tr>\
+                  <th>Name</th>\
+                  <th>Type</th>\
+                  <th>Default</th>\
+                </tr>\
+              </thead>');
+          table.append(table_head);
+          table.append(table_body);
+          var table_body = $('<tbody />');
+          schema.find("key").each(function() {
+            var key = 
+              $('<tr>\
+                  <td>' + $(this).attr("id") + '</td>\
+                  <td>' + $(this).attr("type") + '</td>\
+                  <td>' + $(this).attr("default") + '</td>\
+                </tr>');
+              table_body.append(key);
+          });
+          table.append(table_body);
+          modal_body.append(table);
+        };
+        var schema = loadOpenTable(opentable,cps);
+      });
+    },
+    "error":function(){
+      alert("Error loading datatables");
+    }
+  });
+  
+	api.draggable({"containment":"parent"});
+	api.droppable({"drop":function(event,ui) {$(this).chain(ui.draggable);}});
+	api.on("click.setup",function(event) {
+	 if(this != event.target)
+	  return false;
+	 modal.modal();
+	});
+  $("#area").append(api);
+  api.css({"position":"absolute","top":y,"left":x});
+  api.fadeIn();
+}
+
+//Handels relinking of the chain upon removal of link
+
+function unChain() {
+	if($(this).hasPrevious()) {
+		if($(this).hasNext()) {
+			
+			$(this).previous().link($(this).next())
+			
+			//Move every element after this to the right position
+		
+			$first = $(this).previous();
+			$second = $(this).next();
+			do {
+				$second.css("left",$first.position().left+$first.width()*1.2);
+				$first = $second;
+				if($second.hasNext())
+					$second = $second.next();
+			} while($first != $second);
+		}
+		else{ //No next?
+			$(this).previous().removeAttr("next");
+		}
+	}
+	else{ //No previous?
+		if($(this).hasNext()) {
+		
+			//Makes next the first element
+			$(this).next().removeAttr("previous");
+		}
+	}
+	
+	//Reset to original state
+	
+	$(this).removeAttr("next");
+	$(this).removeAttr("previous");
+	$(this).draggable("option",{"distance":1,"start":function(event,ui){$(this).css("z-index",++zindex);}});
+};
+
+$.fn.unChain = unChain;
+
+function chain($with) {
+	
+	$with.draggable("option",{"distance":30,"start":unChain});
+
+	$(this).draggable("option",{"distance":30,"start":unChain});
+	
+	if($(this).hasNext()) { //Insert between this and this.next
+	
+	 $($with).link($(this).next());
+
+	}
+	$(this).link($with);
+	$behind = $(this);
+	$toMove = $with;
+	
+	while($behind.hasNext()){
+		$toMove.css({"top":$behind.position().top,"left":$behind.position().left+$behind.width()*1.2});
+		$behind = $toMove;
+		$toMove = $toMove.next();
+	}
+}
+
+$.fn.chain = chain;
+
+function start() {
+	var data = {};
+	var chain = [$(this)];
+	var box = $(this);
+	while(box.hasNext()) {
+	 box = box.next()
+		chain.push(box);
+	}
+	
+	var $cps = function(data) {
+	 console.log(data);
+	}
+	
+	// Create continuation
+	
+	for(var k = chain.length-1; k >= 0; --k) {
+    (function(i,$copy) {
+      $cps = function(data) {
+       chain[i].run(data,$copy);
+      }
+     })(k,$cps);
+  }
+  $cps({});
+}
+
+$.fn.start = start
+
+function run(data,cps) {
+
+  var api = $(this);
+  
+  var continuation = function(xml) {
+    var schema = YQLtoJSON(xml);
+    var modal = 
+      $('<div class="modal fade hide">\
+    ');
+    var modal_header = 
+    $('<div class="modal-header">\
+        <button type="button" class="close" data-dismiss="modal">×</button>\
+        <h3>Data Inspector</h3>\
+      </div>\
+    ');
+    console.log(JSON.stringify(schemafy(data)))
+    var modal_body = 
+      $('<div class="modal-body">');
+    var inspect = $('<a href="#" class="btn btn-info">Inspect</a>');
+    inspect.popover({
+      "title": "Schemata",
+      "content": JSON.stringify(schemafy(data))
+    });
+    var table =
+      $('<table class="table"/>');
+    var table_head = 
+      $('<thead>\
+          <tr>\
+            <th>Name</th>\
+            <th>Type</th>\
+            <th>Value</th>\
+          </tr>\
+        </thead>');
+    table.append(table_head);
+    table.append(table_body);
+    var table_body = $('<tbody />');
+    
+    var inputs = [];
+    
+    $.each(schema,function(key,value) {
+      if(data[key] === undefined && value.default === undefined) {
+        var input = 
+          $('<input type="text" name="' + key + '" />');
+        var inputField = 
+          $('<tr>\
+              <td>' + key + '</td>\
+              <td>' + value.type + '</td>')
+              .append($('<td />').append(input)).append
+           ('</tr>');
+          inputs.push(input);
+          table_body.append(inputField);
+        }
+    });
+    
+    table.append(table_body);
+    modal_body.append(inspect).append(table);
+    
+    var next = $('<a href="#" class="btn btn-primary" data-loading-text="Loading..">Next</a>');
+    next.click(function(event) {
+      next.button("loading");
+      var ccps = function(data) {
+        next.button("reset");
+        modal.modal("hide");
+        cps(data);
+      }
+      var data = {};
+      $.each(inputs,function() {
+        data[$(this).attr("name")] = $(this).val();
+      });
+      YQL(api.attr("api"),data,ccps);
+    });
+  
+    var modal_footer = 
+      $('<div class="modal-footer">\
+          <a href="#" class="btn" data-dismiss="modal">Close</a>\
+        </div>').append(next);
+    
+    modal.append(modal_header);
+    modal.append(modal_body);
+    modal.append(modal_footer);
+    
+    modal.modal();
+  };
+  
+  $.ajax({
+		"url":api.attr("api"),
+		"dataType": "xml",
+		"success":function(data) {
+      continuation(data);
+		},
+		"error":function(){
+			alert("Error getting YQL Table");
+		}
+	});
+}
+
+$.fn.run = run

@@ -1,0 +1,24 @@
+$(function() {
+ $.ajax({
+		"url":"@{OpentablesR}",
+		"dataType":"json",
+		"async":false,
+		success:function(data){
+			$(".#{inputClass}").autocomplete({
+		  source: data,
+		  minLength: 3,
+		  select: function(event,ui){
+			  $(this).parent().loadAPI(ui.item.value);
+			  $(this).remove();
+		  }
+	  });
+		},
+		"error":function(){
+			alert("Error loading datatables");
+		}
+	});
+	$(".#{inputClass}").click(function() {
+	 alert("lol");
+	});
+	$(".#{apiClass}").draggable({"containment":"parent","opacity":0.45});
+});

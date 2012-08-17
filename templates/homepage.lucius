@@ -1,0 +1,62 @@
+#area {
+	width:100%;
+	height:540px;
+	background:#eee;
+	border:1px solid #ecc;
+	border-radius:2px;
+	cursor:pointer;
+	z-index:1;
+	position:relative;
+}
+
+#output {
+	width:40px;
+	height:40px;
+	float:left;
+	background-color:#4D90FE;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+
+#save {
+	width:40px;
+	height:40px;
+	float:left;
+	background-color:#59D659;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+
+#clear {
+	width:40px;
+	height:40px;
+	float:left;
+	background-color:#D14836;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+
+#bin {
+ width: 150px;
+ height:104px;
+ position:absolute;
+ bottom:10px;
+ right:10px;
+ background: url(@{StaticR images_bin_png}) no-repeat;
+ background-size: 150px 104px;
+}
+
+.api {
+ font:normal 13px/150% sans-serif;
+	color:white;
+	text-shadow:1px 1px black;
+	background-color:RoyalBlue;
+	z-index:2;
+	position:absolute;
+	width:140px;
+	height:90px;
+	border-radius:2px;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+
+.api input {
+ width:120px;
+ margin:5px;
+}

@@ -1,0 +1,6 @@
+[submodule "Plugins/bootstrap"]
+	path = Plugins/bootstrap
+	url = git@github.com:fabianbergmark/bootstrap.git
+[submodule "static/yql-tables"]
+	path = static/yql-tables
+	url = git@github.com:fabianbergmark/yql-tables.git

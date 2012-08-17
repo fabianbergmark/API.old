@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <div class="span12">
+    <div id="area">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="row-fluid">
+            <div class="span4">
+              <div id="output">
+            <div class="span4">
+              <div id="save">
+            <div class="span4">
+              <div id="clear">
+      <div id="bin">

@@ -1,0 +1,24 @@
+Default: &defaults
+  user: api
+  password: ogh5%rgt
+  host: localhost
+  port: 3306
+  database: api
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: API_test
+  <<: *defaults
+
+Staging:
+  database: API_staging
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: API_production
+  poolsize: 100
+  <<: *defaults
