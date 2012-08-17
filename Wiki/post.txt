@@ -1,0 +1,17 @@
+Used to get data from sites that require POST data to work.
+
+==Parameters==
+
+'''contenttype'''
+
+Default: text/plain
+
+Required: false
+
+'''postdata'''
+
+Required: true
+
+'''url'''
+
+Required: true

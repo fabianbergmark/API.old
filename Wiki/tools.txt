@@ -1,0 +1,32 @@
+==YQL==
+
+A list of [[Open Data Table]]s available for use.
+
+[[Post]]
+
+==JavaScript==
+
+A list of usable JavaScript functions.
+
+'''XML'''
+
+replace
+<source lang="javascript">
+function replace(data)
+{
+	y.log("replace1");
+	if(data.children().length() == 0)
+	{
+		y.log("replace2");
+		data.text.replace("\n","");
+	}
+	else
+	{
+		y.log("replace4");
+		for(var i = 0; i < data.children().length(); i++)
+		{
+			replace(data.child(i));
+		}
+	}
+}
+</source>

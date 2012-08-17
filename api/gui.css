@@ -1,0 +1,277 @@
+n:0;
+				padding:0;
+}
+html {
+	width:100%;
+	height:100%;
+}
+body {
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+}
+/*h1   {
+ * 	font:bold 20px sans-serif;
+ * 		color: #666;
+ * 			position:absolute;
+ * 				right:20px;
+ * 					top:20px;
+ * 					}*/
+#area{
+	position:absolute;
+	z-index:0;
+	display:block;
+	width:90%;
+	height:90%;
+	margin:5%;
+	background:#eee;
+	border:1px solid #ecc;
+	border-radius:2px;
+	cursor:pointer;
+}
+#area h2{
+	position:absolute;
+	bottom:0px;
+	right:20px;
+	z-index:4;
+}
+.SmallAPI {
+	position:absolute;
+	background:#eee;
+	border-radius:1px;
+}
+.API {
+	font:normal 13px/150% sans-serif;
+	color:white;
+	text-shadow:1px 1px black;
+	background-color:RoyalBlue;
+	position:absolute;
+	z-index:2;
+	display:none;
+	width:10%;
+	height:13%;
+	border-radius:2px;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.API input {
+	border:1px solid #ccc;
+	width:96%;
+	margin:2%;
+}
+p
+.API h1 {
+	font:bold Monospace;
+	color:white;
+}
+.API textarea {
+	height:100px;
+	width:96%;
+	margin:2%;
+}
+.For {
+	font:normal 13px/150% sans-serif;
+	color:white;
+	text-shadow:1px 1px black;
+	position:absolute;
+	z-index:2;
+	width:10%;
+	height:13%;
+	border-radius:2px;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Ent {
+	position:absolute;
+	top:2%;
+	left:2%;
+	width:20%;
+	height:20%;
+	z-index:3;
+	background-color:#4D90FE;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Jmp {
+	position:absolute;
+	top:2%;
+	right:2%;
+	width:20%;
+	height:20%;
+	z-index:3;
+	background-color:#59D659;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Container {
+	position:absolute;
+	margin:5%;
+	height:26%;
+	width:26%;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Start {
+	text-shadow:1px 1px black;
+	position:absolute;
+	z-index:1;
+	width:170px;
+	height:120px;
+	vertical-align:middle;
+	text-align:center;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Output {
+	position:absolute;
+	top:20px;
+	left:20px;
+	width:40px;
+	height:40px;
+	z-index:2;
+	background-color:#4D90FE;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+#WorkSpace {
+	position:relative;
+}
+#Demos {
+	position:relative;
+}
+#Demo {
+	width:30px;
+	height:30px;
+	background-color:RoyalBlue;
+}
+.stdout {
+	position:absolute;
+	top:30px;
+	left:30px;
+	width:90%;
+	height:90%;
+	overflow:hidden;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Arrow {
+	background-image: url('test.png');
+	width:100px;
+	height:72px;
+	position:absolute;
+}
+.Bin {
+	background-image: url('bin.png');
+	width:190px;
+	height:132px;
+	position:absolute;
+	bottom:2%;
+	right:2%;
+}
+.OutputBox {
+	position:absolute;
+	width:200px;
+	height:70px;
+	padding:5px;
+	
+	border-radius:2px;	
+	background:RoyalBlue;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Start h1 {
+	font:bold 40px sans-serif;
+	color:#666;
+}
+.Link {
+	position:absolute;
+	z-index:1;
+	width:170px;
+	height:120px;
+	background:PaleGreen;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Order {
+	position:absolute;
+	top:20px;
+	left:20px;
+	width:30px;
+	height:30px;
+	z-index:2;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Save {
+	position:absolute;
+	top:20px;
+	left:80px;
+	width:40px;
+	height:40px;
+	z-index:2;
+	background-color:#59D659;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Clear {
+	position:absolute;
+	top:20px;
+	left:140px;
+	width:40px;
+	height:40px;
+	z-index:2;
+	background-color:#D14836;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.ForLoop {
+	position:absolute;
+	top:20px;
+	left:200px;
+	width:40px;
+	height:40px;
+	z-index:2;
+	background-color:#D14836;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Saved {
+	position:relative;
+	float:left;
+	width:70px;
+	height:50px;
+	background:RoyalBlue;
+	border-radius:2px;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.Inspect {
+	position:absolute;
+	top:60px;
+	left:60px;
+	width:auto;
+	height:auto;
+	background:SlateBlue;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.inspectAPI {
+	position:absolute;
+	top:100px;
+	left:100px;
+	width:auto;
+	height:auto;
+	z-index:3;
+	background:SlateBlue;
+	box-shadow:1px 1px 6px rgba(0,0,0,0.25);
+}
+.ui-menu-item {
+	font-size:62.5%;
+}
+ul {
+	color:white;
+	margin-left:10px;
+	line-height:100%;
+	list-style-position:inside;
+}
+input[type="button"] {
+	display:block;
+	width:100px;
+	margin:10px auto;
+	padding:10px;
+	border:1px solid #ccc;
+	background:white;
+	border-radius:2px;
+	font-size:20px;
+	font-weight:bold;
+	color:#666;
+}
+input[type="button"]:hover {
+	cursor:pointer;
+	background:#f0f0f0;
+}

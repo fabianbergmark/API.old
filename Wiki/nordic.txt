@@ -1,0 +1,171 @@
+'''API''' for quering the NOMXN website for stock information
+
+== Parameters ==
+
+'''company''' - symbol abbreviation eq. ABB
+
+'''stopdate''' - latest data in YYYY-MM-DD format
+
+'''startdate''' - earliest data in YYYY-MM-DD format
+
+'''fields''' (optional) - requested data fields, see table below. (default: 0,1,2,3,4,5,6,7,8,9,10,21)
+
+0 - dt - date (YYYY-MM-DD)
+
+1 - hp - highest price
+
+2 - lp - lowest price
+
+3 - op - opening price
+
+4 - cp - closing price
+
+5 - bp - 
+
+6 - ap - average price
+
+7 - bdp
+
+8 - tv - total volume
+
+9 - nt - number of trades
+
+10 - to - revenue
+
+11 - ip - (only observed as 1.0)
+
+12 - iv - (only observedw as 1)
+
+13 - ml
+
+14 - ts
+
+15 - inv
+
+16 - chd
+
+17 - chy
+
+18 - ch12m
+
+19 - sp
+
+20 - oi
+
+21 - avp - average price
+
+22 - avy
+
+23 - cby
+
+24 - cay
+
+25 - bdy
+
+26 - cy
+
+27 - hy
+
+28 - ly
+
+29 - x
+
+30 - ins - instrument ID for the requested company
+
+31 - insnm - abbreviation of the requested company
+
+32 - mvav1 - 
+
+33 - mvav2 -
+
+34 - mvav3 -
+
+35 - sd -
+
+36 - hv
+
+37 - fsto - 
+
+38 - ssto -
+
+39 - tsto -
+
+40 - doesn't exist
+
+41 - macd
+
+42 - macds
+
+43 - mt
+
+44 - osc
+
+45 - rsi
+
+46 - doesn't exist
+
+47 - ed
+
+48 - isin - ISIN code for the requested company
+
+49 - cpnrt - 
+
+50 - instp - 
+
+51 - atap - 
+
+52 - du - 
+
+53 - ytm
+
+54 - typ
+
+55 - ch - change in closing price compared to the last day
+
+56 - chp - percentage change in closing price compared to the last day
+
+57 - spch - 
+
+58 - spchp - 
+
+59 - 
+
+== API documentation ==
+
+'''Host:''' www.nasdaqomxnordic.com/webproxy/DataFeedProxy.aspx
+
+'''Post: '''
+<source lang="xml">
+xmlquery=<post>
+<param name="SubSystem" value="History"/>
+<param name="Action" value="GetDataSeries"/>
+<param name="Instrument" value="SSE3966"/>
+<param name="FromDate" value="STARTDATE"/>
+<param name="ToDate" value="STOPDATE"/>
+<param name="hi__a" value="VALUES"/>
+</post>
+</source>
+
+
+== Result ==
+
+'''Sucess'''
+
+<source lang="xml">
+<response status="1" source="DataFeedProxy.aspx" querytype="POST" timestamp="2011-10-18 17:43:22" version="1.0.1.65">
+	<hi ap="149.00" avp="149.45" bdp="-0.80" bp="148.90" cp="148.90" dt="2011-08-02" hp="151.20" lp="147.70" nt="4294" op="150.90" to="381089697" tv="2550004"/>
+	<hi ap="147.40" avp="148.17" bdp="-1.60" bp="147.30" cp="147.30" dt="2011-08-03" hp="151.40" lp="145.90" nt="4692" op="148.10" to="438478786" tv="2959217"/>
+	<hi ap="140.70" avp="143.71" bdp="-6.70" bp="140.60" cp="140.70" dt="2011-08-04" hp="147.60" lp="140.70" nt="5558" op="147.60" to="501564178" tv="3490084"/>
+	<hi ap="140.30" avp="139.39" bdp="-0.40" bp="140.20" cp="140.20" dt="2011-08-05" hp="144.50" lp="132.30" nt="8771" op="133.80" to="725795064" tv="5206935"/>
+	<hi ap="131.70" avp="134.98" bdp="-8.70" bp="131.50" cp="131.50" dt="2011-08-08" hp="139.10" lp="131.40" nt="8493" op="136.90" to="652288238" tv="4832271"/>
+	<hi ap="138.60" avp="131.97" bdp="7.00" bp="138.50" cp="138.60" dt="2011-08-09" hp="138.60" lp="124.80" nt="12374" op="130.00" to="936859804" tv="7098320"/>
+</response>
+</source>
+
+'''Error'''
+
+If the request fails, ie. the ticket symbol doesn't exists
+
+''No data available right now.''
+
+is returned. The error message can contain formatting information like HTML header tags and additional information

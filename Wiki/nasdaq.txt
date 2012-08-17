@@ -1,0 +1,63 @@
+'''API''' for querying the NASDAQ website for stock information
+
+== Definitions ==
+
+'''Abbreviation''' - Every share traded on NASDAQ have a unique [http://en.wikipedia.org/wiki/Ticker_symbol ticker symbol] used as identification when querying data.
+
+== Parameters ==
+
+'''days''' - amount of days
+
+'''company''' - symbol abbreviation eq. ABB
+
+'''startdate''' - earliest data in YYYY-MM-DD format
+
+Time specifications should be given in the following combinations
+
+days
+
+startdate
+
+== Actions ==
+
+'''redirect'''
+
+'''translate'''
+
+== API Translation ==
+
+'''days''' will be the given parameter or calculated from startdate.
+
+'''Host: ''' http://charting.nasdaq.com
+
+'''GET: ''' /ext/charts.dll?2-1-14-0-0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|
+0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|
+0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|
+0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|
+0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|
+0,0,0,0,0|0,0,0,0,0|0,0,0,0,0|0,0,0,0,0-7'''days'''-03NA000000'''abbreviation'''
+-&SF:4|5-WD=539-HT=395--XXCL-
+
+== Result ==
+
+'''Sucess'''
+
+A sucessfull request returns the following structure
+
+{|
+|Date || Open || High || Low || Close/Last || Volume
+|-
+|14:43 || 11.80 || 12.22 || 11.50 || 12.13 || 320,489
+|-
+|03/11/2011 || 11.00 || 12.08 || 10.96 || 12.05 || 668,824
+|-
+|03/10/2011 || 11.40 || 11.55 || 11.21 || 11.22 || 343,310
+|}
+
+'''Error'''
+
+If the request fails, ie. the ticket symbol doesn't exists
+
+''Data is not available for this symbol.''
+
+is returned.

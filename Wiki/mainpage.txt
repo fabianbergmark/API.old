@@ -1,0 +1,99 @@
+In recent years, web services like [http://www.wolframalpha.com Wolfram|Alpha], [http://maps.google.com Google maps] etc. has provided users with ways to both access and analyze immense amount of data.
+
+However, in the aspect of connectivity between services users are often limited by the functionality provided by the developers. Whilst [http://www.nasdaq.com NASDAQ] gives to access financial data in a way suitable for most users, a stock analytic may find him or herself limited by the functionality provided by the site. In the same way Wolfram|Alpha is amazing at everything mathematical (and everything else) but we are again limited by manual inputting of data.
+
+Of course, writing a program that can communicate with both NASDAQ and Wolfram|Alpha, managing formatting etc. is doable but takes time. Also, in the case of NASDAQ which lacks an official API, the result is often that every programmer trying to fetch financial data has to reverse engineer the API themselves.
+
+This project is the answer to the question, how do I get Wolfram to analyze financial data. Along the way the question has become more general: How do i use A as a function of B without A knowing anything specific about B and vice versa.
+
+==Goals==
+
+Increasing the accessibility of the web by defining ways to exchange information, eg. [[Open Data Table]]s making them publicly available.
+
+Extend upon previous knowledge. It has to be compatible with already official APIs, but at the same time provide a possibility for extensions and improvements.
+
+Openness. This Wiki and the APIs can be used by anyone. The APIs will, just as this wiki be collaborate resource enabling anyone to make changes.
+
+==Request==
+
+www.apicreator.php?api=nasdaq.php?startdate=2010-01-01&stopdate=2010-12-31&company=ABB&api=wolfram.php?function=linereg
+
+==APIs==
+
+An API usually consists of tree parts. An [http://developer.yahoo.com/yql/ YQL] [[Open Data Table]] defining the parameters required to get data, a PHP proxy to translate the data into an JavaScript containing the YQL statement, and a schema defining the output data. The reasons for using YQL are several:
+
+It enables the client to fetch content cross domain in [http://en.wikipedia.org/wiki/JSON JSON] format.
+
+The [[Open Data Table]]s provide their own documentation, enabling them to be used by other developers resulting in a more open web.
+
+'''Inputs'''
+
+Shown in the example query above, parameters to the API can be given by GET variables. All the required input parameters to the [[NASDAQ API]] is given this way. The [[Wolfram Alpha API]] however, only receives parts of its parameters as GET variables. The x and y coordinates are the result of the NASDAQ API and passed as a POST variable.
+
+''Rule'': '''GET''' has precedence over '''POST'''
+
+'''JSON schema'''
+
+<source lang="javascript">
+{
+	"name":"Product",
+	"properties":
+	{
+		"id":
+		{
+			"type":"number",
+			"description":"Product identifier",
+			"required":true
+		},
+		"name":
+		{
+			"description":"Name of the product",
+			"type":"string",
+			"required":true
+		},
+		"price":
+		{
+			"type":"number",
+			"minimum":0,
+			"required":true
+		},
+		"tags":
+		{
+			"type":"array",
+			"items":
+			{
+				"type":"string"
+			}
+		},
+		"stock":
+		{
+			"type":"object",
+			"properties":
+			{
+				"warehouse":
+				{
+					"type":"number"
+				},
+				"retail":
+                                {
+					"type":"number"
+				}
+			}
+		}
+	}
+}
+</source>
+
+==Outputs==
+
+A Output is basically an API used to display data in some way. The only difference is that the output schema is defined as an empty table.
+
+==The Wiki==
+
+This wikis purpose is to provide a place to write documentation and usage examples for APIs. It does also provide a platform for discussion about the APIs functionality.
+
+'''Useful links'''
+
+[[API List]]
+
+[[Tools]]
